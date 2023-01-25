@@ -46,14 +46,6 @@ public class BasicMenu extends JFrame {
         setContentPane(mainPanel);
 
         addButtonListeners();
-
-        addButton.addActionListener(l -> action = ActionEnum.ADDITION);
-        minusButton.addActionListener(l -> action = ActionEnum.MINUS);
-        multiplyButton.addActionListener(l -> action = ActionEnum.MULTIPLICATION);
-        divisionButton.addActionListener(l -> action = ActionEnum.DIVISION);
-        modButton.addActionListener(l -> action = ActionEnum.MODULUS);
-
-        clearButton.addActionListener(l -> clear());
     }
 
     /***
@@ -85,16 +77,27 @@ public class BasicMenu extends JFrame {
         a8Button.addActionListener(l -> handleButton(8.0));
         a9Button.addActionListener(l -> handleButton(9.0));
 
+        addButton.addActionListener(l -> action = ActionEnum.ADDITION);
+        minusButton.addActionListener(l -> action = ActionEnum.MINUS);
+        multiplyButton.addActionListener(l -> action = ActionEnum.MULTIPLICATION);
+        divisionButton.addActionListener(l -> action = ActionEnum.DIVISION);
+        modButton.addActionListener(l -> action = ActionEnum.MODULUS);
+
         equalsButton.addActionListener(l -> {
             value = calculate(lastAction, lastValue);
             updateDisplay();
         });
+
+        clearButton.addActionListener(l -> clear());
     }
 
     /***
      * Clear the text fields/areas
      */
     private void clear() {
+        value = lastValue = null;
+        action = lastAction = null;
+
         answerArea.setText(null);
         displayField.setText(null);
     }
@@ -157,7 +160,7 @@ public class BasicMenu extends JFrame {
      * Calculate a new value
      * @param action - the action
      * @param val - the val
-     * @return - the calculated value
+     * @return
      */
     private Double calculate(ActionEnum action, Double val) {
         switch (action) {
