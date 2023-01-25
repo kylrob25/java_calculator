@@ -16,7 +16,7 @@ public class BasicMenu extends JFrame {
     private JButton a7Button;
     private JButton a4Button;
     private JTextField displayField;
-    private JTextArea answerArea;
+    private JTextField answerField;
     private JPanel displayPanel;
     private JPanel buttonPanel;
     private JButton a3Button;
@@ -46,6 +46,9 @@ public class BasicMenu extends JFrame {
         setContentPane(mainPanel);
 
         addButtonListeners();
+
+        answerField.setFont(new Font(Font.MONOSPACED, Font.BOLD, 20));
+        answerField.setHorizontalAlignment(SwingConstants.RIGHT);
     }
 
     /***
@@ -62,7 +65,7 @@ public class BasicMenu extends JFrame {
      */
     private void disableTextFields() {
         displayField.setEnabled(false);
-        answerArea.setEnabled(false);
+        answerField.setEnabled(false);
     }
 
     private void addButtonListeners() {
@@ -106,7 +109,7 @@ public class BasicMenu extends JFrame {
         value = lastValue = null;
         action = lastAction = null;
 
-        answerArea.setText(null);
+        answerField.setText(null);
         displayField.setText(null);
     }
 
@@ -114,7 +117,7 @@ public class BasicMenu extends JFrame {
      * Update the display
      */
     private void updateDisplay() {
-        answerArea.setText(String.valueOf(value));
+        answerField.setText(String.valueOf(value));
     }
 
     /***
