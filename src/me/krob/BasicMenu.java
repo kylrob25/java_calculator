@@ -66,7 +66,7 @@ public class BasicMenu extends JFrame {
     }
 
     private void addButtonListeners() {
-        // TOOD: Use classes and a loop for this
+        // TODO: Find a cleaner way of doing this
         a1Button.addActionListener(l -> handleButton(1.0));
         a2Button.addActionListener(l -> handleButton(2.0));
         a3Button.addActionListener(l -> handleButton(3.0));
@@ -82,6 +82,10 @@ public class BasicMenu extends JFrame {
         multiplyButton.addActionListener(l -> action = ActionEnum.MULTIPLICATION);
         divisionButton.addActionListener(l -> action = ActionEnum.DIVISION);
         modButton.addActionListener(l -> action = ActionEnum.MODULUS);
+
+        // TODO:
+        pointButton.addActionListener(l -> {});
+        negativeButton.addActionListener(l -> {});
 
         equalsButton.addActionListener(l -> {
             if (lastValue == null || lastAction == null) {
@@ -164,7 +168,7 @@ public class BasicMenu extends JFrame {
      * Calculate a new value
      * @param action - the action
      * @param val - the val
-     * @return
+     * @return - the calculated value
      */
     private Double calculate(ActionEnum action, Double val) {
         switch (action) {
