@@ -29,8 +29,10 @@ public class BasicMenu extends JFrame {
     private JButton minusButton;
     private JButton addButton;
     private JButton equalsButton;
-    private Double value, previous;
-    private ActionEnum action;
+
+    // Start
+    private Double value, lastValue;
+    private ActionEnum action, lastAction;
 
     public BasicMenu(Main main) {
         super("Calculator");
@@ -82,6 +84,11 @@ public class BasicMenu extends JFrame {
         a7Button.addActionListener(l -> handleButton(7.0));
         a8Button.addActionListener(l -> handleButton(8.0));
         a9Button.addActionListener(l -> handleButton(9.0));
+
+        equalsButton.addActionListener(l -> {
+            value = calculate(lastAction, lastValue);
+            updateDisplay();
+        });
     }
 
     /***
@@ -92,29 +99,78 @@ public class BasicMenu extends JFrame {
         displayField.setText(null);
     }
 
+    /***
+     * Update the display
+     */
     private void updateDisplay() {
         answerArea.setText(String.valueOf(value));
     }
 
+    /***
+     * Handle number button presses
+     * @param val - Pressed button
+     */
     private void handleButton(double val) {
         if (value == null) {
+            if (action == null) action = ActionEnum.NONE;
+
+            // Setting the value
             value = val;
+
+            // Updating the display
+            updateDisplay();
             return;
         }
 
-        value = calculate(val); // Calculate value
-        System.out.printf("value: %s val: %s action: %s%n", value, val, action);
+        // Appending the value
+        if (action == ActionEnum.NONE) {
+            value *= 10;
+            value += val;
+            updateDisplay();
+            return;
+        }
 
-        action = ActionEnum.NONE; // Resetting action
-        updateDisplay(); // Update display
+        // Storing the previous action/value
+        lastAction = action;
+        lastValue = val;
+
+        // Calculate the new value
+        value = calculate(val);
+
+        // Resetting the action
+        action = ActionEnum.NONE;
+
+        // Updating the display
+        updateDisplay();
     }
 
+    /***
+     * Calculate a new value
+     * @param val - the val
+     * @return - the calculated value
+     */
     private Double calculate(Double val) {
+        return calculate(action, val);
+    }
+
+    /***
+     * Calculate a new value
+     * @param action - the action
+     * @param val - the val
+     * @return - the calculated value
+     */
+    private Double calculate(ActionEnum action, Double val) {
         switch (action) {
             case ADDITION:
                 return value + val;
             case MINUS:
                 return value - val;
+            case MULTIPLICATION:
+                return value * val;
+            case MODULUS:
+                return value % val;
+            case DIVISION:
+                return value / val;
         }
         return null;
     }
