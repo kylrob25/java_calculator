@@ -84,6 +84,10 @@ public class BasicMenu extends JFrame {
         modButton.addActionListener(l -> action = ActionEnum.MODULUS);
 
         equalsButton.addActionListener(l -> {
+            if (lastValue == null || lastAction == null) {
+                return;
+            }
+
             value = calculate(lastAction, lastValue);
             updateDisplay();
         });
